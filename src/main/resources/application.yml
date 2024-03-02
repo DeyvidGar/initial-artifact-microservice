@@ -1,0 +1,14 @@
+# Spring application config
+server:
+  port: 8090
+
+# Variables for the application configuration.
+application:
+  interceptor:
+    paths: /hola, /hola2
+  constants:
+    headers:
+      - name: test
+        description: description of test
+        required: true
+        methods: post, get
