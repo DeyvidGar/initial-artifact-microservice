@@ -5,10 +5,9 @@ server:
 # Variables for the application configuration.
 application:
   interceptor:
-    paths: /hola, /hola2
+    paths: /any-path
   constants:
     headers:
-      - name: test
-        description: description of test
-        required: true
+      - name: example
+        description: description of header
         methods: post, get

@@ -25,11 +25,6 @@ public class HeadersModel {
     private String description;
 
     /**
-     * Boolean value if is required in the microservice.
-     */
-    private Boolean required;
-
-    /**
      * Methods that are include in the header.
      */
     private List<String> methods;
