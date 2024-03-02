@@ -35,5 +35,8 @@ public class AppConstants {
      */
     public static final String PATH_ERROR      = "Path      : ";
 
+    /**
+     * To show in console the attribute trace.
+     */
     public static final String TRACE           = "Trace     : ";
 }

@@ -1,7 +1,5 @@
 package com.deyvis.initialartifactms;
 
-import com.deyvis.initialartifactms.constants.AppConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author David G.
  * @version 1.0
  */
-
 @SpringBootApplication
 public class InitialArtifactMsApplication implements CommandLineRunner {
 
