@@ -39,4 +39,19 @@ public class AppConstants {
      * To show in console the attribute trace.
      */
     public static final String TRACE           = "Trace     : ";
+
+    //KEY VALUES
+
+    /**
+     * The key value in the attribute of the request.
+     */
+    public static final String START_PETITION = "startPetition";
+
+    //MESSAGES VALUES
+
+    /**
+     * THis message is showed in the console when the app interceptor is completed.
+     */
+    public static final String COM_INTERCEPTOR = "Complete 'AppInterceptor' in ";
+
 }

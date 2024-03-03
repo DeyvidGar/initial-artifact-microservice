@@ -1,7 +1,10 @@
 package com.deyvis.initialartifactms;
 
+import com.deyvis.initialartifactms.constants.MagicValuesConstants;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Arrays;
 
 /**
  * InitialArtifactMsApplication Main class.
@@ -10,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0
  */
 @SpringBootApplication
-public class InitialArtifactMsApplication {
+public class InitialArtifactMsApplication implements CommandLineRunner {
 
 	/**
 	 * Method main where start spring application.
@@ -20,4 +23,7 @@ public class InitialArtifactMsApplication {
 		SpringApplication.run(InitialArtifactMsApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+	}
 }

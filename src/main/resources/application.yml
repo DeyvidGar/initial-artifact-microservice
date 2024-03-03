@@ -11,3 +11,9 @@ application:
       - name: example
         description: description of header
         methods: post, get
+      - name: getexample
+        description: only get
+        methods: get
+      - name: Content-Type
+        description: This required in the body request.
+        methods: post

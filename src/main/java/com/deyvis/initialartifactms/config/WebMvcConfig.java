@@ -20,7 +20,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     private AppValuesComponent app;
 
-
     /**
      * Component that contains the logic of default interceptor.
      */
@@ -46,6 +45,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(appInterceptor).addPathPatterns(app.getPaths());
     }
-
 
 }

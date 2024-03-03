@@ -1,5 +1,6 @@
-package com.deyvis.initialartifactms.model.common;
+package com.deyvis.initialartifactms.models.common;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@Builder
 public class HandlerErrorResponse {
 
     /**
@@ -38,4 +40,5 @@ public class HandlerErrorResponse {
      * Path where occurs the error.
      */
     private String path;
+
 }

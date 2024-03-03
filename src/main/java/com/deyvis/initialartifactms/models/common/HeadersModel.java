@@ -1,4 +1,4 @@
-package com.deyvis.initialartifactms.model.common;
+package com.deyvis.initialartifactms.models.common;
 
 import lombok.Getter;
 import lombok.Setter;
