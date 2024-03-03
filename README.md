@@ -3,7 +3,7 @@
 ## Description
 
 <p>This spring boot project is created fot to use in microservice local projects, that contains an initial configuration
-that all microservice should to have</p>
+that all microservice should to have.</p>
 
 <p>To start to use this microservice is recommended to refactor->rename values of:</p>
 
@@ -23,6 +23,14 @@ The values to modify are:</p>
 - **RestControllerAdvice**
 
 <p>desc.</p>
+
+## As build
+
+<p>This project as build with the next dependencies:</p>
+
+- **Spring-boot 3.2.3**
+- **Springframework 6.1.4**
+- **Lombok**
 
 ## What i need?
 
@@ -76,22 +84,14 @@ mvn spring-boot:run
 
 <p>We can run the application in intellij following the next steps:</p>
 
-```console
-1. Find the main class in com.deyvis.initialartifactms.InitialArtifactMsApplication.java
-```
+> 1. Find the main class in com.deyvis.initialartifactms.InitialArtifactMsApplication.java
 
-```console
-2. Right click and Run 'InitialArtifactMsApplication.main()'
-```
+> 2. Right click and Run 'InitialArtifactMsApplication.main()'
 
 ### For Eclipse or STS IDE
 
 <p>We can run the application in Eclipse following the next steps:</p>
 
-```console
-1. Find in the package explorer this proyect
-```
+> 1. Find in the package explorer this proyect
 
-```console
-2. Right click and Run as -> Spring boot application.
-```
+> 2. Right click and Run as -> Spring boot application.
