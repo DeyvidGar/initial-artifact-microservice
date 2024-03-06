@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * This component obtain the vales of configuration file the headers that are required in the microservice.
+ * This component obtain the objects of configuration file the headers that are required in the microservice.
  *
  * @author David G.
  * @version 1.0

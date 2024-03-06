@@ -2,8 +2,7 @@
 
 ## Description
 
-<p>This spring boot project is created fot to use in microservice local projects, that contains an initial configuration
-that all microservice should to have.</p>
+<p>This spring boot project is created fot to use in microservice local projects, that contains an initial recommended configuration for microservice.</p>
 
 <p>To start to use this microservice is recommended to refactor->rename values of:</p>
 
@@ -24,9 +23,9 @@ The values to modify are:</p>
 
 <p>desc.</p>
 
-## As build
+## Construction
 
-<p>This project as build with the next dependencies:</p>
+<p>This project was build with the next dependencies:</p>
 
 - **Spring-boot 3.2.3**
 - **Springframework 6.1.4**

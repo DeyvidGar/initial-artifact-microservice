@@ -1,12 +1,16 @@
 package com.deyvis.initialartifactms.utils;
 
 import com.deyvis.initialartifactms.components.HeadersComponent;
+import com.deyvis.initialartifactms.exceptions.MissingHeaderException;
+import com.deyvis.initialartifactms.models.common.HeadersModel;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.ServletRequestBindingException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This component contains the utils methods for validate interceptor.
@@ -55,19 +59,55 @@ public class InterceptorUtils {
     }
 
     /**
+     * This method validate the headers on petition the type post and put.
+     *
+     * @param headersMap
+     * @param method
+     */
+    public static void matcherValidateHeader(Map<String, Object> headersMap, String method) {
+        boolean isPost = method.equalsIgnoreCase(HttpMethod.POST.name());
+        boolean isPut = method.equalsIgnoreCase(HttpMethod.PUT.name());
+
+        if(isPost || isPut) {
+            //todo: validate headers that required in post and put methods
+
+            //todo: exception in content type and accept, both: application/json
+            //todo: use the class Pattern & Matcher
+        }
+    }
+
+    /**
      * Method that validated the headers that are requires in the petition and type of method http.
      *
      * @param headersMap headers in {@code Map} that have the petition.
      * @param method type of method http.
      * @throws ServletRequestBindingException in case not found required header.
      */
-    public static void validateHeader(Map<String, Object> headersMap, String method)
-            throws ServletRequestBindingException {
+    public static void validateHeader(Map<String, Object> headersMap, String method) throws ServletException, NoSuchMethodException {
 
-        if(method.equalsIgnoreCase(HttpMethod.POST.name())) {
+        Iterator<HeadersModel> iterator = headersComponent.getHeaders().stream()
+                .filter(header -> {
+                    boolean isRequiredMethod = header.getMethods()
+                            .stream()
+                            .anyMatch(s -> s.equalsIgnoreCase(method));
+                    return isRequiredMethod;
+                })
+                .iterator();
+
+        while(iterator.hasNext()){
+            String name = iterator.next().getName();
+            String message = iterator.next().getDescription();
+            boolean containsKey = headersMap.containsKey(name);
+            Object value = headersMap.get(name);
+
+            if (!containsKey || Objects.isNull(value)) {
+                switch (name) {
+                    case "Accept" -> throw new HttpMediaTypeNotAcceptableException(message);
+                    case "Content-type" -> throw new HttpMediaTypeNotSupportedException(message);
+                    default -> throw new MissingHeaderException(name);
+                }
+            }
         }
-
-
-
     }
+
 }

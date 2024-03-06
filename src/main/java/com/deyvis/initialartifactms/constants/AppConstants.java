@@ -8,7 +8,7 @@ package com.deyvis.initialartifactms.constants;
  */
 public class AppConstants {
 
-    // HANDLER ERRRO ADVICE MESSSAGES IN COSOLE
+    //*---- HANDLER ERROR ADVICE MESSAGES IN CONSOLE ----*\\
 
     /**
      * To show in console the attribute timestamp.
@@ -40,18 +40,20 @@ public class AppConstants {
      */
     public static final String TRACE           = "Trace     : ";
 
-    //KEY VALUES
+    //*---- KEY VALUES ----*\\
 
     /**
      * The key value in the attribute of the request.
      */
     public static final String START_PETITION = "startPetition";
 
-    //MESSAGES VALUES
+    //*---- LOG MESSAGES VALUES ----*\\
 
     /**
-     * THis message is showed in the console when the app interceptor is completed.
+     * THis message is showed in the console when the petition is completed.
      */
-    public static final String COM_INTERCEPTOR = "Complete 'AppInterceptor' in ";
+    public static final String COMPLETE_PETITION  = "Complete petition in ";
+
+    public static final String START_PETITION_LOG = "Start petition:";
 
 }

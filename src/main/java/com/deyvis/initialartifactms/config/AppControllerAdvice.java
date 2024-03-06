@@ -1,6 +1,7 @@
 package com.deyvis.initialartifactms.config;
 
 import com.deyvis.initialartifactms.constants.AppConstants;
+import com.deyvis.initialartifactms.exceptions.MissingHeaderException;
 import com.deyvis.initialartifactms.models.common.HandlerErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -40,7 +41,25 @@ public class AppControllerAdvice {
             HttpRequestMethodNotSupportedException ex, HttpServletRequest request){
 
         HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.METHOD_NOT_ALLOWED);
-        showErrorLog(ex, request);
+        showErrorLog(ex, request, HttpStatus.METHOD_NOT_ALLOWED);
+
+        return error;
+    }
+
+    /**
+     * Method that show in the response and console the error for the microservice.
+     *
+     * @param ex exception captured.
+     * @param request of the petition.
+     * @return @{@link HandlerErrorResponse} for the response.
+     */
+    @ExceptionHandler(MissingHeaderException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public HandlerErrorResponse handlerMissingHeaderExceptionEx(
+            MissingHeaderException ex, HttpServletRequest request){
+
+        HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.BAD_REQUEST);
+        showErrorLog(ex, request, HttpStatus.BAD_REQUEST);
 
         return error;
     }
@@ -58,7 +77,7 @@ public class AppControllerAdvice {
             HttpMediaTypeNotSupportedException ex, HttpServletRequest request){
 
         HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-        showErrorLog(ex, request);
+        showErrorLog(ex, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 
         return error;
     }
@@ -68,11 +87,12 @@ public class AppControllerAdvice {
      *
      * @param ex generic exception.
      * @param request of the petition.
+     * @param methodNotAllowed type of HttpStatus.
      */
-    private void showErrorLog(Exception ex, HttpServletRequest request) {
-        log.error(AppConstants.STATUS_ERROR + HttpStatus.METHOD_NOT_ALLOWED.series());
+    private void showErrorLog(Exception ex, HttpServletRequest request, HttpStatus methodNotAllowed) {
+        log.error(AppConstants.STATUS_ERROR + methodNotAllowed.series());
         log.error(AppConstants.MESSAGE_ERROR + ex.getMessage());
-        log.error(AppConstants.CODE_ERROR + HttpStatus.METHOD_NOT_ALLOWED.value());
+        log.error(AppConstants.CODE_ERROR + methodNotAllowed.value());
         log.error(AppConstants.TIMESTAMP_ERROR + LocalDateTime.now());
         log.error(AppConstants.PATH_ERROR + request.getRequestURI());
         log.error(AppConstants.TRACE);

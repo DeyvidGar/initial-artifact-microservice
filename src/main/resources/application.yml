@@ -1,6 +1,6 @@
 # Spring application config
 server:
-  port: 8090
+  port: 8080
 
 # Variables for the application configuration.
 application:
@@ -8,12 +8,12 @@ application:
     paths: /any-path
   constants:
     headers:
-      - name: example
-        description: description of header
-        methods: post, get
-      - name: getexample
-        description: only get
-        methods: get
+      - name: Accept-Language
+        description: Type of language in the microservice.
+        methods: post, get, put
+      - name: Accept
+        description: Accept is required to indicate the type of response.
+        methods: get, post, put
       - name: Content-Type
         description: This required in the body request.
-        methods: post
+        methods: post, put

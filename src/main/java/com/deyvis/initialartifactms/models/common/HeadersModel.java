@@ -2,6 +2,7 @@ package com.deyvis.initialartifactms.models.common;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ import java.util.List;
  * @author David G.
  * @version 1.0
  */
+@ToString
 @Getter
 @Setter
 public class HeadersModel {

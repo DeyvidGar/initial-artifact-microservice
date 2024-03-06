@@ -38,16 +38,18 @@ public class AppInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info(AppConstants.START_PETITION_LOG);
 
-        //todo: calculate the time to start the request, and put in the request attribute.
         Long startPetition = System.currentTimeMillis();
         request.setAttribute(AppConstants.START_PETITION, startPetition);
 
-        //todo: obtain the headers in the request.
         Map<String, Object> headersMap = InterceptorUtils.getHeadersMap(request);
 
         //todo: validate the headers.
         InterceptorUtils.validateHeader(headersMap, request.getMethod());
+
+        //todo: validate matches in headers.
+        InterceptorUtils.matcherValidateHeader(headersMap, request.getMethod());
 
         //todo: validate if the request should have body request.
 
@@ -67,14 +69,12 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-
         Long endPetition = System.currentTimeMillis();
         Long startPetition = (Long) request.getAttribute(AppConstants.START_PETITION);
         Long totalTime = endPetition - startPetition;
 
-        String message = AppUtils.stringBuilder(AppConstants.COM_INTERCEPTOR, totalTime, MagicValuesConstants._MS);
+        String message = AppUtils.stringBuilder(AppConstants.COMPLETE_PETITION, totalTime, MagicValuesConstants._MS);
         log.info(message);
-
     }
 
 }

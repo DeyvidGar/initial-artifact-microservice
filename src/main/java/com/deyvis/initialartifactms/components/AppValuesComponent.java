@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * This class obtain the values of configuration file for the microservice.
+ * This class obtain the 'simple' values of configuration file for the microservice.
  *
  * @author David G.
  * @version 1.0
