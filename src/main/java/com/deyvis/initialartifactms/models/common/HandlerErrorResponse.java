@@ -24,7 +24,12 @@ public class HandlerErrorResponse {
     /**
      * Status http of the petition.
      */
-    private Enum status;
+    private String status;
+
+    /**
+     * Series http of the petition.
+     */
+    private Enum series;
 
     /**
      * Short message to describe the error petition.

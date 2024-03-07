@@ -8,12 +8,12 @@ application:
     paths: /any-path
   constants:
     headers:
-      - name: Accept-Language
-        description: Type of language in the microservice.
-        methods: post, get, put
       - name: Accept
-        description: Accept is required to indicate the type of response.
+        description: "Accept is required to indicate the type of response."
         methods: get, post, put
+      - name: Accept-Language
+        description: "Type of language in the microservice."
+        methods: post, get, put
       - name: Content-Type
-        description: This required in the body request.
+        description: "Content-Type required in the body request."
         methods: post, put

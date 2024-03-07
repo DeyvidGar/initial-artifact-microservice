@@ -1,4 +1,4 @@
-package com.deyvis.initialartifactms.config;
+package com.deyvis.initialartifactms.controllers;
 
 import com.deyvis.initialartifactms.constants.AppConstants;
 import com.deyvis.initialartifactms.exceptions.MissingHeaderException;
@@ -7,12 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 /**
  * This class take the control for the handlers exceptions.
@@ -29,11 +30,11 @@ public class AppControllerAdvice {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Method that show in the response and console the error for the microservice.
+     * Method that show in the response and console the error when user use a method not supported for the microservice.
      *
      * @param ex exception captured.
      * @param request of the petition.
-     * @return @{@link HandlerErrorResponse} for the response.
+     * @return {@link HttpRequestMethodNotSupportedException} for the response.
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -47,11 +48,11 @@ public class AppControllerAdvice {
     }
 
     /**
-     * Method that show in the response and console the error for the microservice.
+     * Method that show in the response and console the error when not found header for the microservice.
      *
      * @param ex exception captured.
      * @param request of the petition.
-     * @return @{@link HandlerErrorResponse} for the response.
+     * @return {@link MissingHeaderException} for the response.
      */
     @ExceptionHandler(MissingHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -65,11 +66,11 @@ public class AppControllerAdvice {
     }
 
     /**
-     * Method that show in the response and console the error for the microservice.
+     * Method that show in the response and console the error, for example in 'Content-type' required header for the microservice.
      *
      * @param ex exception captured.
      * @param request of the petition.
-     * @return @{@link HandlerErrorResponse} for the response.
+     * @return {@link HttpMediaTypeNotSupportedException} for the response.
      */
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
@@ -78,6 +79,43 @@ public class AppControllerAdvice {
 
         HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         showErrorLog(ex, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+
+        return error;
+    }
+
+    /**
+     * Method that show in the response and console the error, for example in 'Accept' required header for the microservice.
+     *
+     * @param ex exception captured.
+     * @param request of the petition.
+     * @return {@link HttpMediaTypeNotAcceptableException} for the response.
+     */
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public HandlerErrorResponse handlerHttpMediaTypeNotAcceptableExceptionEx(
+            HttpMediaTypeNotAcceptableException ex, HttpServletRequest request){
+
+        HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.NOT_ACCEPTABLE);
+        showErrorLog(ex, request, HttpStatus.NOT_ACCEPTABLE);
+
+        return error;
+    }
+
+    /**
+     * Show in the response and console the error,
+     * when the petition no have the object in request and object expected for the microservice.
+     *
+     * @param ex exception captured.
+     * @param request of the petition.
+     * @return {@link NoSuchElementException} for the response.
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public HandlerErrorResponse handlerHttpMessageNotReadableExceptionEx(
+            HttpMessageNotReadableException ex, HttpServletRequest request){
+
+        HandlerErrorResponse error = createErrorResponse(ex, request, HttpStatus.BAD_REQUEST);
+        showErrorLog(ex, request, HttpStatus.BAD_REQUEST);
 
         return error;
     }
@@ -113,7 +151,8 @@ public class AppControllerAdvice {
                 .timestamp(LocalDateTime.now())
                 .code(httpStatus.value())
                 .message(ex.getMessage())
-                .status(httpStatus.series())
+                .series(httpStatus.series())
+                .status(httpStatus.getReasonPhrase().toUpperCase())
                 .path(request.getRequestURI())
                 .build();
     }

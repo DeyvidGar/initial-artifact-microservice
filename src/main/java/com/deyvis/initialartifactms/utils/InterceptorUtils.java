@@ -48,10 +48,10 @@ public class InterceptorUtils {
             Boolean present = headersComponent
                     .getHeaders()
                     .stream()
-                    .anyMatch(h -> h.getName().equals(headerRequest));
+                    .anyMatch(h -> h.getName().equalsIgnoreCase(headerRequest));
 
             if (present) {
-                headersMap.put(headerRequest, request.getHeader(headerRequest));
+                headersMap.put(headerRequest.toLowerCase(), request.getHeader(headerRequest));
             }
         });
 
@@ -85,7 +85,8 @@ public class InterceptorUtils {
      */
     public static void validateHeader(Map<String, Object> headersMap, String method) throws ServletException, NoSuchMethodException {
 
-        Iterator<HeadersModel> iterator = headersComponent.getHeaders().stream()
+        Iterator<HeadersModel> iterator = headersComponent.getHeaders()
+                .stream()
                 .filter(header -> {
                     boolean isRequiredMethod = header.getMethods()
                             .stream()
@@ -95,15 +96,16 @@ public class InterceptorUtils {
                 .iterator();
 
         while(iterator.hasNext()){
-            String name = iterator.next().getName();
-            String message = iterator.next().getDescription();
-            boolean containsKey = headersMap.containsKey(name);
-            Object value = headersMap.get(name);
+            HeadersModel next = iterator.next();
+            String name = next.getName();
+            String message = next.getDescription();
+            boolean containsKey = headersMap.containsKey(name.toLowerCase());
+            Object value = headersMap.get(name.toLowerCase());
 
-            if (!containsKey || Objects.isNull(value)) {
+            if (!containsKey || Objects.isNull(value) || value.toString().isEmpty()) {
                 switch (name) {
-                    case "Accept" -> throw new HttpMediaTypeNotAcceptableException(message);
-                    case "Content-type" -> throw new HttpMediaTypeNotSupportedException(message);
+                    case "accept" -> throw new HttpMediaTypeNotAcceptableException(message);
+                    case "content-type" -> throw new HttpMediaTypeNotSupportedException(message);
                     default -> throw new MissingHeaderException(name);
                 }
             }
