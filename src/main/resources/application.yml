@@ -1,0 +1,19 @@
+# Spring application config
+server:
+  port: 8080
+
+# Variables for the application configuration.
+application:
+  interceptor:
+    paths: /any-path
+  constants:
+    headers:
+      - name: Accept
+        description: "Accept is required to indicate the type of response."
+        methods: get, post, put
+      - name: Accept-Language
+        description: "Type of language in the microservice."
+        methods: post, get, put
+      - name: Content-Type
+        description: "Content-Type required in the body request."
+        methods: post, put
